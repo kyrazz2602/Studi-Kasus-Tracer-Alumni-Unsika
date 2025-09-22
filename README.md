@@ -1,50 +1,49 @@
-### Tracer Alumni UNSIKA — Streamlit Dashboard
+### 🚀 Tracer Alumni UNSIKA — Streamlit Dashboard
 
-Dashboard interaktif untuk analisis hasil tracer study alumni (UNSIKA) berbasis Streamlit. Proyek ini memuat berbagai halaman analitik seperti ringkasan KPI, statistik, sentimen, klasterisasi K-Means, korelasi, dan EDA, dengan filter global yang konsisten di seluruh halaman.
-
----
-
-## Fitur Utama
-
-- **Filter Global (Sidebar)**: Tahun Angkatan, Program Studi, Konsentrasi, Lokasi Geografis — berlaku untuk semua halaman.
-- **Overview (Halaman Utama)**:
-  - KPI: jumlah alumni, rata-rata gaji, rata-rata IPK, rata-rata masa tunggu kerja.
-  - Pie Konsentrasi, peta sebaran provinsi (choropleth), insight otomatis ringkas.
-  - Ringkasan EDA & Korelasi otomatis (numerik, kategorikal, korelasi kuat).
-- **Statistik** (`pages/2_Statistik.py`): Ringkasan visual statistik (sesuai implementasi file).
-- **Sentimen** (`pages/3_Sentimen.py`): Analisis sentimen (sesuai implementasi file).
-- **Klaster** (`pages/4_Klaster.py`): Klasterisasi K-Means dengan pemilihan variabel dan jumlah klaster, ringkasan per klaster, serta visualisasi sebaran klaster.
-- **Korelasi** (`pages/5_Korelasi.py`): Eksplorasi korelasi variabel (sesuai implementasi file).
-- **EDA** (`pages/6_EDA.py`): Eksplorasi data (sesuai implementasi file).
+Dashboard interaktif untuk menganalisis hasil tracer study alumni (UNSIKA) berbasis Streamlit. Menyediakan KPI, statistik, sentimen, klasterisasi K-Means, korelasi, dan EDA, lengkap dengan filter global yang konsisten di semua halaman.
 
 ---
 
-## Struktur Proyek
+## ✨ Fitur Utama
+
+- **🧭 Filter Global (Sidebar)**: Tahun Angkatan, Program Studi, Konsentrasi, Lokasi Geografis — berlaku di semua halaman.
+- **📊 Overview**: KPI (jumlah alumni, rata-rata gaji, IPK, masa tunggu), pie konsentrasi, peta provinsi (choropleth), insight otomatis, ringkasan EDA & korelasi.
+- **📈 Statistik**: Scatter + trendline, uji Chi-Square, ANOVA (sesuai ketersediaan kolom).
+- **💬 Sentimen**: Distribusi sentimen (rule-based sederhana bila kolom belum ada) dan sampel umpan balik.
+- **🧩 Klaster (K-Means)**: Pilih variabel numerik dan jumlah klaster, ringkasan per klaster, visualisasi sebaran.
+- **🔗 Korelasi**: Eksplorasi korelasi variabel (di halaman terkait).
+- **🧪 EDA**: Eksplorasi data (di halaman terkait).
+
+---
+
+## 🧱 Struktur Proyek
 
 ```
 Tracer_Dashboard/
 ├─ app.py                        # Halaman Overview (entry point)
 ├─ utils.py                      # Loader CSV & manajemen filter global
-├─ new_tracer_alumni_elektro_unsika.csv  # Dataset sumber (contoh)
+├─ new_tracer_alumni_elektro_unsika.csv  # Dataset contoh (opsional)
 ├─ pages/
-│  ├─ 1_Karir_Gaji.py           # (opsional) karir & gaji
-│  ├─ 2_Statistik.py            # statistik
-│  ├─ 3_Sentimen.py             # sentimen
-│  ├─ 4_Klaster.py              # klasterisasi K-Means
-│  ├─ 5_Korelasi.py             # korelasi
-│  └─ 6_EDA.py                  # EDA
+│  ├─ 1_Karir_Gaji.py           # Karir & Gaji
+│  ├─ 2_Statistik.py            # Analisis Statistik
+│  ├─ 3_Sentimen.py             # Umpan Balik & Sentimen
+│  ├─ 4_Klaster.py              # Klasterisasi K-Means
+│  ├─ 5_Korelasi.py             # Korelasi (jika digunakan)
+│  └─ 6_EDA.py                  # EDA (jika digunakan)
+├─ requirements.txt             # Dependensi Python
+└─ .gitignore                   # File/dir yang diabaikan Git
 ```
 
 ---
 
-## Prasyarat
+## 🧰 Prasyarat
 
 - Python 3.9+ (disarankan)
 - Pip atau conda
 
 ---
 
-## Instalasi
+## ⚙️ Instalasi
 
 1) Buat dan aktifkan virtual environment (opsional tapi disarankan):
 
@@ -53,71 +52,61 @@ python -m venv .venv
 .venv\Scripts\activate  # Windows
 ```
 
-2) Instal dependensi yang diperlukan:
+2) Instal dependensi:
 
 ```bash
-pip install streamlit pandas plotly scikit-learn
+pip install -r requirements.txt
 ```
 
 ---
 
-## Menjalankan Aplikasi
+## ▶️ Menjalankan Aplikasi
 
-Pastikan file data `new_tracer_alumni_elektro_unsika.csv` tersedia di root proyek (atau atur path pada `utils.py`). Lalu jalankan:
+Pastikan file data `new_tracer_alumni_elektro_unsika.csv` ada di root proyek (atau sesuaikan `CSV_PATH` di `utils.py`). Lalu jalankan:
 
 ```bash
 streamlit run app.py
 ```
 
-Streamlit akan menampilkan URL lokal, misalnya `http://localhost:8501`.
+Aplikasi akan muncul di `http://localhost:8501`.
 
 ---
 
-## Konfigurasi Data
+## 🗂️ Konfigurasi Data
 
-- Lokasi default CSV diatur pada `utils.py` melalui konstanta `CSV_PATH`.
-- Kolom yang digunakan (contoh, dapat disesuaikan dengan dataset Anda):
+- Path default CSV disetel di `utils.py` melalui konstanta `CSV_PATH`.
+- Kolom yang digunakan (contoh, sesuaikan dengan dataset Anda):
   - "Tahun Angkatan", "Program Studi", "Konsentrasi", "Lokasi Geografis"
   - "Gaji", "IPK", "Masa Tunggu Kerja", "Bidang Industri"
   - "Relevansi Kurikulum" (untuk klaster)
-- Jika nama kolom Anda berbeda, samakan dengan yang dirujuk di kode atau modifikasi kode sesuai kebutuhan.
+- Bila nama kolom berbeda, samakan dengan yang dirujuk di kode atau sesuaikan peta `rename_map` pada `utils.py`.
 
 ---
 
-## Tentang Halaman Klaster (K-Means)
+## 🧩 Tentang Halaman Klaster (K-Means)
 
-- Pilih jumlah klaster (k) dan variabel numerik yang tersedia: "Gaji", "Tahun Angkatan", "Relevansi Kurikulum", "IPK", "Masa Tunggu Kerja".
-- Data diproses dengan StandardScaler lalu dikelompokkan dengan KMeans (`sklearn`).
-- Ditampilkan ringkasan rata-rata per klaster serta visualisasi sebaran (mis. IPK vs Gaji).
-
----
-
-## Deploy ke Streamlit Community Cloud
-
-1) Push repo ini ke GitHub.
-2) Di Streamlit Community Cloud, buat aplikasi baru dan arahkan ke repo ini.
-3) Atur file utama ke `app.py` dan Python version (jika perlu).
-4) Tambahkan file data ke repo atau gunakan storage eksternal (S3/GDrive) dan ubah loader.
-
-Untuk produksi, sebaiknya tambahkan `requirements.txt` berisi:
-
-```
-streamlit
-pandas
-plotly
-scikit-learn
-```
+- Pilih jumlah klaster (k) dan variabel numerik: "Gaji", "Tahun Angkatan", "Relevansi Kurikulum", "IPK", "Masa Tunggu Kerja".
+- Data diskalakan dengan `StandardScaler`, lalu dikelompokkan `KMeans`.
+- Tersedia ringkasan rata-rata per klaster dan visualisasi (mis. IPK vs Gaji).
 
 ---
 
-## Kontribusi
+## ☁️ Deploy ke Streamlit Community Cloud
+
+1) Push repo ke GitHub.
+2) Buat app di Streamlit Community Cloud dan arahkan ke repo ini.
+3) Set main file `app.py` (Python version mengikuti `requirements.txt`).
+4) Sertakan data di repo atau gunakan storage eksternal dan sesuaikan loader.
+
+---
+
+## 🤝 Kontribusi
 
 Kontribusi sangat terbuka. Silakan buat issue untuk bug/ide, atau ajukan pull request.
 
 ---
 
-## Lisensi
+## 📄 Lisensi
 
-Belum ditentukan. Jika ingin menggunakan, sebutkan sumber repo ini.
-
+Belum ditentukan. Jika ingin menggunakan, sertakan atribusi ke repo ini.
 
